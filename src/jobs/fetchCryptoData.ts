@@ -1,6 +1,7 @@
 import axios from "axios";
 import schedule from "node-schedule";
 
+import { CoinData } from "../interface/index";
 import { COINGECKO_API_KEY } from "../config/env";
 import cryptoDataModel from "../models/cryptoDataModel";
 
@@ -26,7 +27,7 @@ export const startCryptoDataJob = () => {
         options
       );
 
-      const cryptoData = data.map((coinData: any) => ({
+      const cryptoData = data.map((coinData: CoinData) => ({
         coin: coinData.id,
         price: coinData.current_price,
         marketCap: coinData.market_cap,

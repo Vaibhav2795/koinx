@@ -1,7 +1,4 @@
-interface ErrorResponse {
-  statusCode: number;
-  message: string;
-}
+import { ErrorResponse } from "../interface";
 
 export const createErrorResponse = (
   statusCode: number,

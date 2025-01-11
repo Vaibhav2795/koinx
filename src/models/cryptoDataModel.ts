@@ -1,12 +1,5 @@
-import mongoose, { Schema, Document } from "mongoose";
-
-interface ICryptoData extends Document {
-  coin: string;
-  price: number;
-  marketCap: number;
-  change24h: number;
-  timestamp: Date;
-}
+import mongoose, { Schema } from "mongoose";
+import { ICryptoData } from "../interface";
 
 const CryptoDataSchema: Schema = new Schema({
   coin: {
