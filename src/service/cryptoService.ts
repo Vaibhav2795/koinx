@@ -1,5 +1,6 @@
-import { createErrorResponse } from "../helper/errorHelper";
 import cryptoDataModel from "../models/cryptoDataModel";
+import { createErrorResponse } from "../helper/errorHelper";
+import { calculateStandardDeviation } from "../helper/utils";
 
 export const getCryptoStats = async (coin: string | undefined) => {
   if (!coin) {
@@ -22,4 +23,18 @@ export const getCryptoStats = async (coin: string | undefined) => {
     marketCap: latestData.marketCap,
     "24hChange": latestData.change24h,
   };
+};
+
+export const getCryptoDeviation = async (coin: string | undefined) => {
+  const records = await cryptoDataModel
+    .find({ coin })
+    .sort({ timestamp: -1 })
+    .limit(100);
+
+  const prices = records.map((record) => record.price);
+  if (prices.length < 2) {
+    throw createErrorResponse(400, "Not enough data to calculate deviation.");
+  }
+
+  return calculateStandardDeviation(prices);
 };
